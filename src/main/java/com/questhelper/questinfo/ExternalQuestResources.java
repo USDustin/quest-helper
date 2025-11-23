@@ -167,6 +167,7 @@ public enum ExternalQuestResources
 	TRIBAL_TOTEM("https://oldschool.runescape.wiki/w/Tribal_Totem"),
 	TROLL_ROMANCE("https://oldschool.runescape.wiki/w/Troll_Romance"),
 	TROLL_STRONGHOLD("https://oldschool.runescape.wiki/w/Troll_Stronghold"),
+	TROUBLED_TORTUGANS("https://oldschool.runescape.wiki/w/Troubled_Tortugans"),
 	UNDERGROUND_PASS("https://oldschool.runescape.wiki/w/Underground_Pass"),
 	WANTED("https://oldschool.runescape.wiki/w/Wanted!"),
 	WATCHTOWER("https://oldschool.runescape.wiki/w/Watchtower"),

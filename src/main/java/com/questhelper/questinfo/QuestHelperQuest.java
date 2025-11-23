@@ -257,6 +257,7 @@ import com.questhelper.helpers.quests.treegnomevillage.TreeGnomeVillage;
 import com.questhelper.helpers.quests.tribaltotem.TribalTotem;
 import com.questhelper.helpers.quests.trollromance.TrollRomance;
 import com.questhelper.helpers.quests.trollstronghold.TrollStronghold;
+import com.questhelper.helpers.quests.troubledtortugans.TroubledTortugans;
 import com.questhelper.helpers.quests.twilightspromise.TwilightsPromise;
 import com.questhelper.helpers.quests.undergroundpass.UndergroundPass;
 import com.questhelper.helpers.quests.vampyreslayer.VampyreSlayer;
@@ -440,6 +441,7 @@ public enum QuestHelperQuest
 	TRIBAL_TOTEM(new TribalTotem(), Quest.TRIBAL_TOTEM, QuestVarPlayer.QUEST_TRIBAL_TOTEM, QuestDetails.Type.P2P, QuestDetails.Difficulty.INTERMEDIATE),
 	TROLL_ROMANCE(new TrollRomance(), Quest.TROLL_ROMANCE, QuestVarPlayer.QUEST_TROLL_ROMANCE, QuestDetails.Type.P2P, QuestDetails.Difficulty.INTERMEDIATE),
 	TROLL_STRONGHOLD(new TrollStronghold(), Quest.TROLL_STRONGHOLD, QuestVarPlayer.QUEST_TROLL_STRONGHOLD, QuestDetails.Type.P2P, QuestDetails.Difficulty.INTERMEDIATE),
+	TROUBLED_TORTUGANS(new TroubledTortugans(), Quest.TROUBLED_TORTUGANS, QuestVarbits.QUEST_TROUBLED_TORTUGANS, QuestDetails.Type.P2P, QuestDetails.Difficulty.EXPERIENCED),
 	UNDERGROUND_PASS(new UndergroundPass(), Quest.UNDERGROUND_PASS, QuestVarPlayer.QUEST_UNDERGROUND_PASS, QuestDetails.Type.P2P, QuestDetails.Difficulty.EXPERIENCED),
 	CLIENT_OF_KOUREND(new ClientOfKourend(), Quest.CLIENT_OF_KOUREND, QuestVarbits.QUEST_CLIENT_OF_KOUREND, QuestDetails.Type.P2P, QuestDetails.Difficulty.NOVICE),
 	WANTED(new Wanted(), Quest.WANTED, QuestVarbits.QUEST_WANTED, QuestDetails.Type.P2P, QuestDetails.Difficulty.INTERMEDIATE),
