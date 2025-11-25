@@ -1,6 +1,6 @@
 /*
  *
- *  * Copyright (c) 2021, Zoinkwiz
+ *  * Copyright (c) 2025, TTvanWillegen <https://github.com/TTvanWillegen>
  *  * All rights reserved.
  *  *
  *  * Redistribution and use in source and binary forms, with or without
@@ -24,54 +24,62 @@
  *  * SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  *
  */
-package com.questhelper.requirements.location;
+package com.questhelper.requirements.player;
 
 import com.questhelper.requirements.AbstractRequirement;
-import com.questhelper.steps.tools.QuestPerspective;
 import net.runelite.api.Client;
-import net.runelite.api.Constants;
-import net.runelite.api.coords.LocalPoint;
-import net.runelite.api.coords.WorldPoint;
 
 import javax.annotation.Nonnull;
-import java.util.List;
 
-public class TileIsLoadedRequirement extends AbstractRequirement
+import lombok.Getter;
+import net.runelite.api.gameval.VarbitID;
+
+/**
+ * Requirement that checks if a player has a required number of Port Task slots free.
+ */
+public class FreePortTaskSlotsRequirement extends AbstractRequirement
 {
-	private final WorldPoint worldPoint;
-	private final String displayText;
+	@Getter
+	private final int numSlotsFree;
 
 	/**
-	 * Check if the player is either in the specified zone.
+	 * Checks if the player has a required number of slots free.
 	 *
-	 * @param worldPoint the WorldPoint to check
+	 * @param numSlotsFree the required number of slots free
 	 */
-	public TileIsLoadedRequirement(WorldPoint worldPoint)
+	public FreePortTaskSlotsRequirement(int numSlotsFree)
 	{
-		assert(worldPoint != null);
-		this.worldPoint = worldPoint;
-		this.displayText = "WorldPoint " + worldPoint.toString() + "is loaded locally.";
+		this.numSlotsFree = numSlotsFree;
 	}
 
 	@Override
 	public boolean check(Client client)
 	{
-		List<LocalPoint> localPoints = QuestPerspective.getLocalPointsFromWorldPointInInstance(client.getTopLevelWorldView(), worldPoint);
-		for (LocalPoint localPoint : localPoints)
+		int freeSlots = client.getVarbitValue(VarbitID.PORT_TASK_SLOT_0_ID) == 0 ? 1 : 0;
+		int extraSlotsUnlocked = client.getVarbitValue(VarbitID.PORT_TASK_EXTRA_SLOTS_UNLOCKED);
+		if (extraSlotsUnlocked >= 1)
 		{
-			// Final tiles of a scene do not have objects of them
-			if (localPoint.getSceneX() != Constants.SCENE_SIZE - 1 && localPoint.getSceneY() != Constants.SCENE_SIZE - 1)
-			{
-				return true;
-			}
+			freeSlots += client.getVarbitValue(VarbitID.PORT_TASK_SLOT_1_ID) == 0 ? 1 : 0;
 		}
-		return false;
+		if (extraSlotsUnlocked >= 2)
+		{
+			freeSlots += client.getVarbitValue(VarbitID.PORT_TASK_SLOT_2_ID) == 0 ? 1 : 0;
+		}
+		if (extraSlotsUnlocked >= 3)
+		{
+			freeSlots += client.getVarbitValue(VarbitID.PORT_TASK_SLOT_3_ID) == 0 ? 1 : 0;
+		}
+		if (extraSlotsUnlocked >= 4)
+		{
+			freeSlots += client.getVarbitValue(VarbitID.PORT_TASK_SLOT_4_ID) == 0 ? 1 : 0;
+		}
+		return freeSlots >= numSlotsFree;
 	}
 
 	@Nonnull
 	@Override
 	public String getDisplayText()
 	{
-		return displayText == null ? "" : displayText;
+		return getNumSlotsFree() + " free Sailing Port task slot" + (getNumSlotsFree() == 1 ? "" : "s");
 	}
 }
