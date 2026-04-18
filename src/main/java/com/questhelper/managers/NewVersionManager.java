@@ -44,7 +44,7 @@ public class NewVersionManager
 
 	private final String LAST_VERSION_SEEN_CONFIG_KEY = "lastversionchecked";
 
-	private final String UPDATE_CHAT_TEXT = "Quest Helper has been updated to 4.15.0! We've added Faux's Early Game Leagues Route! You will need to skip steps in the sidebar at times to keep it in track.";
+	private final String UPDATE_CHAT_TEXT = "Quest Helper has been updated to 4.15.1! You can now filter by leagues regions, and the League's Helper is improved.";
 
 	public void updateChatWithNotificationIfNewVersion()
 	{
