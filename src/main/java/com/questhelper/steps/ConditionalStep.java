@@ -28,7 +28,6 @@ import com.google.inject.Inject;
 import com.questhelper.QuestHelperPlugin;
 import com.questhelper.questhelpers.QuestHelper;
 import com.questhelper.requirements.ChatMessageRequirement;
-import com.questhelper.requirements.ManualRequirement;
 import com.questhelper.requirements.MultiChatMessageRequirement;
 import com.questhelper.requirements.Requirement;
 import com.questhelper.requirements.conditional.Conditions;
@@ -144,23 +143,27 @@ public class ConditionalStep extends QuestStep implements OwnerStep
 		var manualOverride = step.getSidebarManualSkipRequirement();
 		if (completion == null || manualOverride == null)
 		{
-
 			return completion;
 		}
-		return new Requirement()
+		// Only auto-tick the sidebar when completion becomes true (rising edge). If we setShouldPass every
+		// tick while the game still reports the step complete, an explicit untick is overwritten immediately.
+		final boolean[] completionWasPassingLastCheck = { false };
+		return not(new Requirement()
 		{
 			@Override
 			public boolean check(Client client)
 			{
 				if (manualOverride.check(client))
 				{
+					completionWasPassingLastCheck[0] = true;
 					return true;
 				}
 				boolean passed = completion.check(client);
-				if (passed && !manualOverride.check(client))
+				if (passed && !completionWasPassingLastCheck[0])
 				{
 					manualOverride.setShouldPass(true);
 				}
+				completionWasPassingLastCheck[0] = passed;
 				return passed;
 			}
 
@@ -169,7 +172,7 @@ public class ConditionalStep extends QuestStep implements OwnerStep
 			{
 				return completion.getDisplayText();
 			}
-		};
+		});
 	}
 
 	private void checkForConditions(Requirement requirement)
